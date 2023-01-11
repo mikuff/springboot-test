@@ -13,6 +13,9 @@ import org.springframework.util.ClassUtils;
 
 import java.util.Set;
 
+/**
+ * 将注解的类注入到spring容器中
+ */
 public class OrderStaterRegistrar implements ImportBeanDefinitionRegistrar, ResourceLoaderAware {
 
     private ResourceLoader resourceLoader;
@@ -32,6 +35,7 @@ public class OrderStaterRegistrar implements ImportBeanDefinitionRegistrar, Reso
         OrderStaterClassPathBeanDefinitionScanner scanner = new OrderStaterClassPathBeanDefinitionScanner(registry, false);
         scanner.setResourceLoader(this.resourceLoader);
         scanner.registerFilters();
+        // 由于这里的扫描路径没有办法动态获取，因此干脆将 @Import(value = {OrderStaterRegistrar.class}) 放到启动类上
         scanner.doScan(ClassUtils.getPackageName(importingClassMetadata.getClassName()));
     }
 

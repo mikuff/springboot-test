@@ -7,8 +7,10 @@ import java.lang.annotation.*;
 @Target(ElementType.TYPE)
 public @interface OrderStater {
 
+    // 排序
     int order() default 0;
 
+    // 方法列表
     String[] methods() default {};
 }
 
